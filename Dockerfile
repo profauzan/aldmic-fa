@@ -44,5 +44,7 @@ RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/fra
 COPY docker/entrypoint.sh /usr/local/bin/film-cabinet-entrypoint
 RUN chmod +x /usr/local/bin/film-cabinet-entrypoint
 
+EXPOSE 80
+
 ENTRYPOINT ["film-cabinet-entrypoint"]
 CMD ["apache2-foreground"]
