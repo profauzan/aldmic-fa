@@ -206,6 +206,7 @@
         function runSearch(page, append) {
             if (state.loading) return;
             var params = new URLSearchParams(new FormData(form));
+            if (!params.get('q') && movieApp.dataset.query) params.set('q', movieApp.dataset.query);
             params.set('page', page);
             setLoading(true);
             fetch(movieApp.dataset.searchUrl + '?' + params.toString(), { headers: { 'Accept': 'application/json' }, credentials: 'same-origin' })

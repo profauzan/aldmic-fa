@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('ui.movies')])
 
 @section('content')
-<div id="movie-app" class="site-shell py-10 sm:py-14" data-movie-app data-search-url="{{ route('movies.search') }}" data-detail-url="{{ url('/movies') }}" data-favorites-url="{{ route('favorites.store') }}" data-delete-url="{{ url('/favorites') }}" data-csrf="{{ csrf_token() }}" data-page="1" data-total="{{ $total }}" data-query="{{ $filters['q'] }}" data-type="{{ $filters['type'] }}" data-year="{{ $filters['year'] }}">
+<div id="movie-app" class="site-shell py-10 sm:py-14" data-movie-app data-search-url="{{ route('movies.search') }}" data-detail-url="{{ url('/movies') }}" data-favorites-url="{{ route('favorites.store') }}" data-delete-url="{{ url('/favorites') }}" data-csrf="{{ csrf_token() }}" data-page="1" data-total="{{ $total }}" data-query="{{ $initialQuery }}" data-type="{{ $initialType }}" data-year="{{ $filters['year'] }}">
     <section class="search-hero animate-rise">
         <div class="max-w-2xl">
             <p class="section-kicker">{{ __('ui.search_kicker') }}</p>
@@ -17,7 +17,7 @@
             <label class="sr-only" for="type">{{ __('ui.type') }}</label>
             <select id="type" name="type" class="select-control">
                 <option value="">{{ __('ui.all_types') }}</option>
-                <option value="movie" {{ $filters['type'] === 'movie' ? 'selected' : '' }}>{{ __('ui.movie') }}</option>
+                <option value="movie" {{ ($filters['type'] ?: $initialType) === 'movie' ? 'selected' : '' }}>{{ __('ui.movie') }}</option>
                 <option value="series" {{ $filters['type'] === 'series' ? 'selected' : '' }}>{{ __('ui.series') }}</option>
                 <option value="episode" {{ $filters['type'] === 'episode' ? 'selected' : '' }}>{{ __('ui.episode') }}</option>
             </select>
@@ -39,10 +39,10 @@
         @if ($error)
             <div data-error class="notice notice-error">{{ $error }}</div>
         @endif
-        <div data-empty class="empty-state {{ ($filters['q'] && ! $error && count($movies) === 0) ? '' : 'hidden' }}">
+        <div data-empty class="empty-state {{ (! $error && count($movies) === 0) ? '' : 'hidden' }}">
             <span class="empty-index">00</span><h2>{{ __('ui.no_results_title') }}</h2><p>{{ __('ui.no_results_copy') }}</p>
         </div>
-        <div data-start class="empty-state {{ (! $filters['q'] && ! $error) ? '' : 'hidden' }}">
+        <div data-start class="empty-state hidden">
             <span class="empty-index">01</span><h2>{{ __('ui.start_title') }}</h2><p>{{ __('ui.start_copy') }}</p>
         </div>
         <div data-movie-grid class="movie-grid {{ count($movies) ? '' : 'hidden' }}">

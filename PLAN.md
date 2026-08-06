@@ -196,6 +196,8 @@ Parameters:
 - `page`: page number.
 - `apikey`: API key.
 
+The initial movie catalog uses `MOVIE_DEFAULT_QUERY` and `MOVIE_DEFAULT_TYPE` so the homepage can show movies before the user performs a search. The defaults are `popular` and `movie` and can be changed through environment configuration.
+
 ### Detail
 
 Parameters:

@@ -60,6 +60,8 @@ Set at least:
 ```env
 APP_KEY=
 OMDB_API_KEY=your-omdb-api-key
+MOVIE_DEFAULT_QUERY=popular
+MOVIE_DEFAULT_TYPE=movie
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432

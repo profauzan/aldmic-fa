@@ -20,10 +20,12 @@ class MovieController extends Controller
         $filters = $this->filters($request, false);
         $data = ['results' => [], 'total' => 0];
         $error = null;
+        $initialQuery = $filters['q'] ?: trim(config('services.omdb.default_query', 'popular'));
+        $initialType = $filters['type'] ?: (! $filters['q'] ? config('services.omdb.default_type', 'movie') : null);
 
-        if ($filters['q']) {
+        if ($initialQuery) {
             try {
-                $data = $this->omdb->search($filters['q'], $filters['type'], $filters['year']);
+                $data = $this->omdb->search($initialQuery, $initialType, $filters['year']);
             } catch (OmdbApiException $exception) {
                 $error = $exception->getMessage();
             }
@@ -33,6 +35,8 @@ class MovieController extends Controller
             'movies' => $data['results'],
             'total' => $data['total'],
             'filters' => $filters,
+            'initialQuery' => $initialQuery,
+            'initialType' => $initialType,
             'favoriteIds' => auth()->user()->favorites()->pluck('imdb_id')->all(),
             'error' => $error,
         ]);

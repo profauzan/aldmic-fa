@@ -33,6 +33,8 @@ return [
     'omdb' => [
         'key' => env('OMDB_API_KEY'),
         'base_url' => env('OMDB_BASE_URL', 'https://www.omdbapi.com/'),
+        'default_query' => env('MOVIE_DEFAULT_QUERY', 'popular'),
+        'default_type' => env('MOVIE_DEFAULT_TYPE', 'movie'),
     ],
 
     'sparkpost' => [
