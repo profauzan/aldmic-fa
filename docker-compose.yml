@@ -24,7 +24,7 @@ services:
     depends_on:
       database:
         condition: service_healthy
-    command: sh -c "php artisan migrate --seed --force && apache2-foreground"
+    command: apache2-foreground
 
   database:
     image: postgres:15-alpine

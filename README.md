@@ -62,6 +62,7 @@ APP_KEY=
 OMDB_API_KEY=your-omdb-api-key
 MOVIE_DEFAULT_QUERY=popular
 MOVIE_DEFAULT_TYPE=movie
+RUN_MIGRATIONS=true
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432
@@ -82,7 +83,7 @@ docker compose up -d --build
 
 The application is available at `http://localhost:8080`.
 
-The Compose command runs migrations and the database seeder on startup. To follow logs:
+The container entrypoint runs migrations and the database seeder on startup. To follow logs:
 
 ```sh
 docker compose logs -f app
@@ -175,7 +176,9 @@ DB_USERNAME=${{Postgres.PGUSER}}
 DB_PASSWORD=${{Postgres.PGPASSWORD}}
 ```
 
-Run the production migration and seeder from the Railway service shell if the deployment command does not run them automatically:
+The Docker entrypoint runs the production migration and seeder automatically. To disable this behavior and run migrations through a separate Railway release command, set `RUN_MIGRATIONS=false`.
+
+Manual migration command:
 
 ```sh
 php artisan migrate --seed --force
