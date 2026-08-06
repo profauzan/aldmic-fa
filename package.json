@@ -1,0 +1,13 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "tailwindcss -i ./resources/css/app.css -o ./public/css/app.css",
+        "development": "tailwindcss -i ./resources/css/app.css -o ./public/css/app.css",
+        "watch": "tailwindcss -i ./resources/css/app.css -o ./public/css/app.css --watch",
+        "prod": "npm run production",
+        "production": "tailwindcss -i ./resources/css/app.css -o ./public/css/app.css --minify"
+    },
+    "devDependencies": {
+        "tailwindcss": "^3.4.17"
+    }
+}

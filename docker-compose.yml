@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      APP_NAME: Film Cabinet
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8080
+      APP_KEY: base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+      DB_CONNECTION: pgsql
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_DATABASE: film_cabinet
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      OMDB_API_KEY: ${OMDB_API_KEY:-}
+      OMDB_BASE_URL: https://www.omdbapi.com/
+      CACHE_DRIVER: file
+      SESSION_DRIVER: file
+    depends_on:
+      database:
+        condition: service_healthy
+    command: sh -c "php artisan migrate --seed --force && apache2-foreground"
+
+  database:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: film_cabinet
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - film-cabinet-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d film_cabinet"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  film-cabinet-db:
