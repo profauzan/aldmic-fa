@@ -45,7 +45,7 @@
     function cardData(button) {
         var card = button.closest('[data-movie-card]');
         return {
-            id: button.dataset.favoriteId,
+            imdb_id: button.dataset.favoriteId,
             title: button.dataset.favoriteTitle || (card && card.dataset.title),
             year: button.dataset.favoriteYear || (card && card.dataset.year),
             type: button.dataset.favoriteType || (card && card.dataset.type),
@@ -72,7 +72,7 @@
 
         button.disabled = true;
         var request = active
-            ? fetch(settings.deleteUrl + '/' + encodeURIComponent(movie.id), {
+            ? fetch(settings.deleteUrl + '/' + encodeURIComponent(movie.imdb_id), {
                 method: 'DELETE',
                 credentials: 'same-origin',
                 headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': settings.csrf },
