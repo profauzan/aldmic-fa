@@ -14,7 +14,7 @@ Film Cabinet is a private movie discovery application built for the Laravel 5 te
 - English and Indonesian localization.
 - Responsive Blade and Tailwind CSS interface.
 - Cinematic transitions, card reveals, hover states, loading motion, and reduced-motion support.
-- Feature and unit tests with mocked OMDb requests.
+- Feature tests for authentication and favorites, plus unit coverage for the OMDb service.
 
 ## Stack
 
@@ -26,6 +26,7 @@ Film Cabinet is a private movie discovery application built for the Laravel 5 te
 - Tailwind CSS 3 CLI.
 - Browser-native Fetch API and IntersectionObserver.
 - Apache in Docker.
+- PHPUnit 7 and Mockery for automated tests.
 
 ## Architecture
 
@@ -54,6 +55,14 @@ Copy the example environment file:
 ```sh
 cp .env.example .env
 ```
+
+When running outside Docker, generate the application key after installing the Composer dependencies:
+
+```sh
+php artisan key:generate
+```
+
+When using Docker Compose, the application key and database settings are supplied by `docker-compose.yml`. The local `.env` file is used to provide the `OMDB_API_KEY` value.
 
 Set at least:
 
@@ -146,7 +155,7 @@ docker run --rm \
   film-cabinet:test-suite php vendor/bin/phpunit
 ```
 
-OMDb requests are mocked in unit tests. Runtime production storage remains PostgreSQL.
+The feature suite covers authentication and favorites. The OMDb HTTP request is mocked in the unit test, so tests do not depend on the external API. Runtime production storage remains PostgreSQL.
 
 ## Railway Deployment
 
@@ -176,7 +185,7 @@ DB_USERNAME=${{Postgres.PGUSER}}
 DB_PASSWORD=${{Postgres.PGPASSWORD}}
 ```
 
-The Docker entrypoint runs the production migration and seeder automatically. To disable this behavior and run migrations through a separate Railway release command, set `RUN_MIGRATIONS=false`.
+The Docker entrypoint runs the production migration and seeder automatically when `RUN_MIGRATIONS` is `true` (the default). To disable this behavior and run migrations through a separate Railway release command, set `RUN_MIGRATIONS=false`.
 
 Manual migration command:
 
@@ -188,18 +197,20 @@ Set `APP_DEBUG=false` in production. The API key and application key must be sto
 
 ## Screenshots and Demo URL
 
-Capture the login, movie catalog, movie detail, and favorites views after deploying. Add the resulting image paths and the Railway URL to this section before submitting the technical test.
+Screenshots and a deployed demo URL are not included in this repository yet. Add the login, movie catalog, movie detail, and favorites screenshots, along with the Railway URL, before submitting the technical test.
 
 ## Project Layout
 
 ```text
 app/Http/Controllers/     Request and response orchestration
 app/Http/Middleware/      Locale handling
+app/User.php              User model
 app/Models/               Favorite model
 app/Services/              OMDb integration
 database/migrations/      Users and favorites schema
 database/seeds/           Required demo user
 resources/views/          Blade pages and components
+resources/lang/           English and Indonesian translations
 resources/css/             Tailwind source and motion styles
 public/js/                 Browser-native interactions
 tests/                     Feature and unit coverage

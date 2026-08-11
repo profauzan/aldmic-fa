@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('ui.movies')])
 
 @section('content')
-<div id="movie-app" class="site-shell py-10 sm:py-14" data-movie-app data-search-url="{{ route('movies.search') }}" data-detail-url="{{ url('/movies') }}" data-favorites-url="{{ route('favorites.store') }}" data-delete-url="{{ url('/favorites') }}" data-csrf="{{ csrf_token() }}" data-page="1" data-total="{{ $total }}" data-query="{{ $initialQuery }}" data-type="{{ $initialType }}" data-year="{{ $filters['year'] }}">
+<div id="movie-app" class="site-shell py-10 sm:py-14" data-movie-app data-search-url="{{ route('movies.search') }}" data-detail-url="{{ url('/movies') }}" data-favorites-url="{{ route('favorites.store') }}" data-delete-url="{{ url('/favorites') }}" data-csrf="{{ csrf_token() }}" data-page="1" data-total="{{ $total }}" data-query="{{ $initialQuery }}">
     <section class="search-hero animate-rise">
         <div class="max-w-2xl">
             <p class="section-kicker">{{ __('ui.search_kicker') }}</p>
@@ -23,7 +23,7 @@
             </select>
             <label class="sr-only" for="year">{{ __('ui.year') }}</label>
             <input id="year" name="year" value="{{ $filters['year'] }}" placeholder="{{ __('ui.year') }}" inputmode="numeric" maxlength="4" class="text-control year-control">
-            <button class="button-primary search-button" type="submit">{{ __('ui.search') }} <span aria-hidden="true">↗</span></button>
+            <button class="button-primary" type="submit">{{ __('ui.search') }} <span aria-hidden="true">↗</span></button>
         </form>
     </section>
 
@@ -37,7 +37,7 @@
         </div>
 
         @if ($error)
-            <div data-error class="notice notice-error">{{ $error }}</div>
+            <div class="notice notice-error">{{ $error }}</div>
         @endif
         <div data-empty class="empty-state {{ (! $error && count($movies) === 0) ? '' : 'hidden' }}">
             <span class="empty-index">00</span><h2>{{ __('ui.no_results_title') }}</h2><p>{{ __('ui.no_results_copy') }}</p>

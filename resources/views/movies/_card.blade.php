@@ -2,7 +2,7 @@
     $isFavorite = in_array($movie['imdb_id'], $favoriteIds ?? [], true);
     $poster = $movie['poster'] ?? null;
 @endphp
-<article class="movie-card reveal" data-movie-card data-imdb-id="{{ $movie['imdb_id'] }}" data-title="{{ $movie['title'] }}" data-year="{{ $movie['year'] }}" data-type="{{ $movie['type'] }}" data-poster="{{ $poster }}">
+<article class="movie-card reveal" data-movie-card data-title="{{ $movie['title'] }}" data-year="{{ $movie['year'] }}" data-type="{{ $movie['type'] }}" data-poster="{{ $poster }}">
     <a href="{{ route('movies.show', $movie['imdb_id']) }}" class="poster-frame group">
         @if ($poster)
             <img src="{{ $poster }}" data-src="{{ $poster }}" alt="{{ $movie['title'] }} poster" loading="lazy" class="poster-image">

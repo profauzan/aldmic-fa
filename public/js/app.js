@@ -126,7 +126,6 @@
         var article = document.createElement('article');
         article.className = 'movie-card reveal';
         article.dataset.movieCard = '';
-        article.dataset.imdbId = movie.imdb_id;
         article.dataset.title = movie.title;
         article.dataset.year = movie.year;
         article.dataset.type = movie.type;
@@ -229,7 +228,7 @@
                     lazyLoadImages(grid);
                 }).catch(function () {
                     if (!append) { setVisible(grid, false); setVisible(empty, false); }
-                    notify('Something went wrong while reaching the catalog.');
+                    notify(copy.serviceError);
                 }).finally(function () { setLoading(false); });
         }
 

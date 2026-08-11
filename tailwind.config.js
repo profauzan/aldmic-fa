@@ -18,12 +18,10 @@ module.exports = {
             },
             keyframes: {
                 rise: { '0%': { opacity: '0', transform: 'translateY(14px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-                shimmer: { '100%': { transform: 'translateX(100%)' } },
                 pulseSoft: { '0%, 100%': { opacity: '0.35' }, '50%': { opacity: '1' } },
             },
             animation: {
                 rise: 'rise 650ms cubic-bezier(0.22, 1, 0.36, 1) both',
-                shimmer: 'shimmer 1.6s infinite',
                 pulseSoft: 'pulseSoft 1.2s ease-in-out infinite',
             },
         },
